@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDCC - Gestão de Clientes</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container-fluid">
+    <div class="row">
+        <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse min-vh-100 p-3 text-white">
+            <div class="position-sticky pt-3">
+                <h4 class="text-center fw-bold mb-4 text-primary">PDCC</h4>
+                <ul class="nav flex-column gap-2">
+                    <li class="nav-item">
+                        <a class="nav-link text-white-50" href="dashboard.html">
+                            <i class="bi bi-speedometer2 me-2"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item" id="menuUsuarios" style="display: none;">
+                        <a class="nav-link text-white-50" href="usuarios.html">
+                            <i class="bi bi-person-lock me-2"></i> Usuários
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white active bg-primary rounded" href="clientes.html">
+                            <i class="bi bi-people me-2"></i> Clientes
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white-50" href="veiculos.html">
+                            <i class="bi bi-car-front me-2"></i> Veículos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white-50" href="servicos.html">
+                            <i class="bi bi-tools me-2"></i> Serviços
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white-50" href="garantias.html">
+                            <i class="bi bi-shield-check me-2"></i> Garantias
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white-50" href="qrcodes.html">
+                            <i class="bi bi-qr-code me-2"></i> QR Codes
+                        </a>
+                    </li>
+                </ul>
+                <hr class="text-secondary my-4">
+                <button onclick="logout()" class="btn btn-outline-danger w-100 btn-sm">
+                    <i class="bi bi-box-arrow-left me-2"></i> Sair
+                </button>
+            </div>
+        </nav>
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2 fw-bold text-dark">Gestão de Clientes</h1>
+                <span class="text-muted">Prontuário Digital Curto-Circuito</span>
+            </div>
+
+            <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+                <h5 class="fw-bold mb-3"><i class="bi bi-person-plus me-2 text-primary"></i>Registar Novo Cliente</h5>
+                <form id="clienteForm">
+                    <input type="hidden" id="clienteId">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="nome" class="form-label small fw-bold">Nome Completo</label>
+                            <input type="text" class="form-control" id="nome" required placeholder="Nome do cliente">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="telefone" class="form-label small fw-bold">Telefone</label>
+                            <input type="text" class="form-control" id="telefone" placeholder="(99) 99999-9999">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="cpf" class="form-label small fw-bold">CPF</label>
+                            <input type="text" class="form-control" id="cpf" placeholder="000.000.000-00">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="endereco" class="form-label small fw-bold">Endereço</label>
+                            <input type="text" class="form-control" id="endereco" placeholder="Rua, Bairro, Cidade">
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <button type="submit" class="btn btn-primary px-4 fw-semibold">
+                            <i class="bi bi-check-lg me-1"></i> Salvar Cliente
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="card border-0 shadow-sm rounded-4 p-4">
+                <h5 class="fw-bold mb-3"><i class="bi bi-table me-2 text-primary"></i>Clientes Cadastrados</h5>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Telefone</th>
+                            <th>CPF</th>
+                            <th>Endereço</th>
+                            <th class="text-center">Ações</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tabelaClientes">
+                        <tr>
+                            <td colspan="6" class="text-center text-muted">Carregando dados...</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    const API_URL = 'https://pdcc-api.onrender.com';
+
+    async function carregarClientes() {
+        try {
+            const response = await fetch(`${API_URL}/api/clientes`);
+            if (response.ok) {
+                const clientes = await response.json();
+                const tabela = document.getElementById('tabelaClientes');
+                tabela.innerHTML = '';
+
+                if (clientes.length === 0) {
+                    tabela.innerHTML = `<tr><td colspan="6" class="text-center text-muted">Nenhum cliente registado.</td></tr>`;
+                    return;
+                }
+
+                clientes.forEach(c => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${c.id}</td>
+                        <td class="fw-semibold">${c.nome}</td>
+                        <td>${c.telefone || '-'}</td>
+                        <td>${c.cpf || '-'}</td>
+                        <td>${c.endereco || '-'}</td>
+                        <td class="text-center">
+                            <button onclick="excluirCliente(${c.id})" class="btn btn-outline-danger btn-sm">
+                                <i class="bi bi-trash"></i> Excluir
+                            </button>
+                        </td>
+                    `;
+                    tabela.appendChild(tr);
+                });
+            } else {
+                console.error("Erro ao buscar clientes.");
+            }
+        } catch (err) {
+            console.error("Erro de conexão:", err);
+            document.getElementById('tabelaClientes').innerHTML = `
+                <tr><td colspan="6" class="text-center text-danger">Erro ao conectar com a API.</td></tr>
+            `;
+        }
+    }
+
+    document.getElementById('clienteForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const clienteData = {
+            nome: document.getElementById('nome').value,
+            telefone: document.getElementById('telefone').value,
+            cpf: document.getElementById('cpf').value,
+            endereco: document.getElementById('endereco').value
+        };
+
+        try {
+            const response = await fetch(`${API_URL}/api/clientes`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(clienteData)
+            });
+
+            if (response.ok) {
+                document.getElementById('clienteForm').reset();
+                carregarClientes();
+            } else {
+                alert('Erro ao salvar o cliente.');
+            }
+        } catch (err) {
+            console.error("Erro ao enviar dados:", err);
+            alert('Erro de conexão com o servidor.');
+        }
+    });
+
+    async function excluirCliente(id) {
+        if (confirm('Deseja realmente excluir este cliente?')) {
+            try {
+                const response = await fetch(`${API_URL}/api/clientes/${id}`, {
+                    method: 'DELETE'
+                });
+                if (response.ok) {
+                    carregarClientes();
+                } else {
+                    alert('Erro ao excluir cliente.');
+                }
+            } catch (err) {
+                console.error("Erro ao excluir:", err);
+            }
+        }
+    }
+
+document.addEventListener("DOMContentLoaded", () => {
+        const role = localStorage.getItem('usuarioRole');
+
+        if (role === 'ADMIN') {
+            const menuU = document.getElementById('menuUsuarios');
+            if (menuU) {
+                menuU.style.display = 'block';
+            }
+        }
+    });
+
+    function logout() {
+        localStorage.removeItem('usuarioNome');
+        localStorage.removeItem('usuarioRole');
+        window.location.href = 'login.html';
+    }
+
+    carregarClientes();
+</script>
+</body>
+</html>
