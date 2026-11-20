@@ -58,7 +58,6 @@
                 <ul class="nav flex-column gap-2">
 
                     <li class="nav-item">
-
                         <a
                                 class="nav-link"
                                 href="dashboard.html"
@@ -66,7 +65,6 @@
                             <i class="bi bi-speedometer2 me-2"></i>
                             Dashboard
                         </a>
-
                     </li>
 
                     <li
@@ -74,7 +72,6 @@
                             id="menuUsuarios"
                             style="display: none;"
                     >
-
                         <a
                                 class="nav-link"
                                 href="usuarios.html"
@@ -82,11 +79,9 @@
                             <i class="bi bi-person-lock me-2"></i>
                             Usuários
                         </a>
-
                     </li>
 
                     <li class="nav-item">
-
                         <a
                                 class="nav-link"
                                 href="clientes.html"
@@ -94,11 +89,9 @@
                             <i class="bi bi-people me-2"></i>
                             Clientes
                         </a>
-
                     </li>
 
                     <li class="nav-item">
-
                         <a
                                 class="nav-link active"
                                 href="veiculos.html"
@@ -106,11 +99,9 @@
                             <i class="bi bi-car-front me-2"></i>
                             Veículos
                         </a>
-
                     </li>
 
                     <li class="nav-item">
-
                         <a
                                 class="nav-link"
                                 href="servicos.html"
@@ -118,11 +109,9 @@
                             <i class="bi bi-tools me-2"></i>
                             Serviços
                         </a>
-
                     </li>
 
                     <li class="nav-item">
-
                         <a
                                 class="nav-link"
                                 href="garantias.html"
@@ -130,11 +119,9 @@
                             <i class="bi bi-shield-check me-2"></i>
                             Garantias
                         </a>
-
                     </li>
 
                     <li class="nav-item">
-
                         <a
                                 class="nav-link"
                                 href="qrcodes.html"
@@ -142,7 +129,6 @@
                             <i class="bi bi-qr-code me-2"></i>
                             QR Codes
                         </a>
-
                     </li>
 
                 </ul>
@@ -150,6 +136,7 @@
                 <hr class="text-secondary my-4">
 
                 <button
+                        type="button"
                         onclick="logout()"
                         class="btn btn-outline-danger w-100 btn-sm"
                 >
@@ -205,9 +192,7 @@
             >
             </div>
 
-            <div
-                    class="pdcc-card p-4 mb-4"
-            >
+            <div class="pdcc-card p-4 mb-4">
 
                 <div
                         class="d-flex justify-content-between align-items-start mb-4"
@@ -277,7 +262,6 @@
                                     id="modelo"
                                     required
                                     maxlength="100"
-                                    placeholder="Ex.: Onix, Gol, Corolla"
                             >
 
                         </div>
@@ -298,7 +282,6 @@
                                     required
                                     maxlength="8"
                                     autocomplete="off"
-                                    placeholder="ABC1D23"
                             >
 
                         </div>
@@ -318,7 +301,6 @@
                                     id="ano"
                                     maxlength="4"
                                     inputmode="numeric"
-                                    placeholder="2024"
                             >
 
                         </div>
@@ -337,16 +319,13 @@
                                     class="form-control"
                                     id="cor"
                                     maxlength="50"
-                                    placeholder="Ex.: Preto"
                             >
 
                         </div>
 
                     </div>
 
-                    <div
-                            class="d-flex flex-wrap gap-2 mt-4"
-                    >
+                    <div class="d-flex flex-wrap gap-2 mt-4">
 
                         <button
                                 type="submit"
@@ -373,9 +352,55 @@
 
             </div>
 
-            <div
-                    class="pdcc-card p-4"
-            >
+            <div class="pdcc-card p-4 mb-4">
+
+                <div
+                        class="d-flex justify-content-between flex-wrap align-items-center gap-3"
+                >
+
+                    <div>
+
+                        <h5 class="pdcc-section-title mb-0">
+
+                            <i class="bi bi-file-earmark-pdf me-2 text-pdcc"></i>
+
+                            Prontuário Digital
+
+                        </h5>
+
+                    </div>
+
+                    <div
+                            class="d-flex flex-wrap align-items-center gap-2"
+                    >
+
+                        <select
+                                id="prontuarioVeiculoSelect"
+                                class="form-select"
+                                style="min-width: 280px;"
+                        >
+                            <option value="">
+                                Carregando veículos...
+                            </option>
+                        </select>
+
+                        <button
+                                type="button"
+                                id="botaoProntuario"
+                                class="btn btn-pdcc fw-semibold"
+                                onclick="baixarProntuario()"
+                        >
+                            <i class="bi bi-file-earmark-arrow-down me-1"></i>
+                            Gerar Prontuário
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="pdcc-card p-4">
 
                 <div
                         class="d-flex justify-content-between flex-wrap align-items-center gap-3 mb-4"
@@ -446,8 +471,8 @@
 </div>
 
 <script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js">
-</script>
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+></script>
 
 <script src="js/config.js"></script>
 <script src="js/auth.js"></script>
@@ -490,7 +515,9 @@
         tipo = 'success'
     ) {
         const mensagem =
-            document.getElementById('mensagem');
+            document.getElementById(
+                'mensagem'
+            );
 
         mensagem.className =
             `alert alert-${tipo}`;
@@ -498,7 +525,9 @@
         mensagem.textContent =
             texto;
 
-        mensagem.classList.remove('d-none');
+        mensagem.classList.remove(
+            'd-none'
+        );
 
         window.scrollTo({
             top: 0,
@@ -506,15 +535,21 @@
         });
 
         window.setTimeout(() => {
-            mensagem.classList.add('d-none');
+            mensagem.classList.add(
+                'd-none'
+            );
         }, 4500);
     }
 
     function limparMensagem() {
         document
-            .getElementById('mensagem')
+            .getElementById(
+                'mensagem'
+            )
             .classList
-            .add('d-none');
+            .add(
+                'd-none'
+            );
     }
 
     function atualizarTotalVeiculos() {
@@ -522,7 +557,9 @@
             veiculosCache.length;
 
         document
-            .getElementById('totalVeiculos')
+            .getElementById(
+                'totalVeiculos'
+            )
             .textContent =
             `${total} ${total === 1 ? 'veículo' : 'veículos'}`;
     }
@@ -536,7 +573,9 @@
         select.innerHTML =
             '<option value="">Selecione um cliente</option>';
 
-        if (clientesCache.length === 0) {
+        if (
+            clientesCache.length === 0
+        ) {
             select.innerHTML =
                 '<option value="">Nenhum cliente cadastrado</option>';
 
@@ -553,20 +592,99 @@
                         )
                 );
 
-        clientesOrdenados.forEach(cliente => {
-            const option =
-                document.createElement(
-                    'option'
+        clientesOrdenados.forEach(
+            cliente => {
+                const option =
+                    document.createElement(
+                        'option'
+                    );
+
+                option.value =
+                    cliente.id;
+
+                option.textContent =
+                    cliente.nome;
+
+                select.appendChild(
+                    option
+                );
+            }
+        );
+    }
+
+    function preencherSelectProntuario() {
+        const select =
+            document.getElementById(
+                'prontuarioVeiculoSelect'
+            );
+
+        const botao =
+            document.getElementById(
+                'botaoProntuario'
+            );
+
+        select.innerHTML =
+            '<option value="">Selecione um veículo</option>';
+
+        if (
+            veiculosCache.length === 0
+        ) {
+            select.innerHTML =
+                '<option value="">Nenhum veículo cadastrado</option>';
+
+            select.disabled =
+                true;
+
+            botao.disabled =
+                true;
+
+            return;
+        }
+
+        select.disabled =
+            false;
+
+        botao.disabled =
+            false;
+
+        const veiculosOrdenados =
+            [...veiculosCache]
+                .sort((a, b) =>
+                    String(a.modelo || '')
+                        .localeCompare(
+                            String(b.modelo || ''),
+                            'pt-BR'
+                        )
                 );
 
-            option.value =
-                cliente.id;
+        veiculosOrdenados.forEach(
+            veiculo => {
+                const option =
+                    document.createElement(
+                        'option'
+                    );
 
-            option.textContent =
-                cliente.nome;
+                const modelo =
+                    veiculo.modelo ||
+                    'Veículo';
 
-            select.appendChild(option);
-        });
+                const placa =
+                    formatarPlaca(
+                        veiculo.placa
+                    ) ||
+                    'Sem placa';
+
+                option.value =
+                    veiculo.id;
+
+                option.textContent =
+                    `${modelo} — ${placa}`;
+
+                select.appendChild(
+                    option
+                );
+            }
+        );
     }
 
     function preencherTabela() {
@@ -575,11 +693,14 @@
                 'tabelaVeiculos'
             );
 
-        tabela.innerHTML = '';
+        tabela.innerHTML =
+            '';
 
         atualizarTotalVeiculos();
 
-        if (veiculosCache.length === 0) {
+        if (
+            veiculosCache.length === 0
+        ) {
             tabela.innerHTML = `
                 <tr>
                     <td
@@ -594,73 +715,79 @@
             return;
         }
 
-        veiculosCache.forEach(veiculo => {
-            const linha =
-                document.createElement('tr');
+        veiculosCache.forEach(
+            veiculo => {
+                const linha =
+                    document.createElement(
+                        'tr'
+                    );
 
-            const clienteNome =
-                veiculo.cliente
-                    ? veiculo.cliente.nome
-                    : 'N/D';
+                const clienteNome =
+                    veiculo.cliente
+                        ? veiculo.cliente.nome
+                        : 'N/D';
 
-            linha.innerHTML = `
-                <td>
-                    ${escaparHtml(veiculo.id)}
-                </td>
+                linha.innerHTML = `
+                    <td>
+                        ${escaparHtml(veiculo.id)}
+                    </td>
 
-                <td class="fw-semibold">
-                    ${escaparHtml(clienteNome)}
-                </td>
+                    <td class="fw-semibold">
+                        ${escaparHtml(clienteNome)}
+                    </td>
 
-                <td>
-                    ${escaparHtml(veiculo.modelo || '-')}
-                </td>
+                    <td>
+                        ${escaparHtml(veiculo.modelo || '-')}
+                    </td>
 
-                <td>
-                    <span class="pdcc-badge-plate">
-                        ${escaparHtml(formatarPlaca(veiculo.placa))}
-                    </span>
-                </td>
+                    <td>
+                        <span class="pdcc-badge-plate">
+                            ${escaparHtml(formatarPlaca(veiculo.placa))}
+                        </span>
+                    </td>
 
-                <td>
-                    ${escaparHtml(veiculo.ano || '-')}
-                </td>
+                    <td>
+                        ${escaparHtml(veiculo.ano || '-')}
+                    </td>
 
-                <td>
-                    ${escaparHtml(veiculo.cor || '-')}
-                </td>
+                    <td>
+                        ${escaparHtml(veiculo.cor || '-')}
+                    </td>
 
-                <td class="text-center">
+                    <td class="text-center">
 
-                    <div
-                        class="d-flex justify-content-center flex-wrap gap-2"
-                    >
-
-                        <button
-                            type="button"
-                            class="btn btn-outline-pdcc btn-sm"
-                            onclick="editarVeiculo(${veiculo.id})"
+                        <div
+                            class="d-flex justify-content-center flex-wrap gap-2"
                         >
-                            <i class="bi bi-pencil-square me-1"></i>
-                            Editar
-                        </button>
 
-                        <button
-                            type="button"
-                            class="btn btn-outline-danger btn-sm"
-                            onclick="excluirVeiculo(${veiculo.id})"
-                        >
-                            <i class="bi bi-trash me-1"></i>
-                            Excluir
-                        </button>
+                            <button
+                                type="button"
+                                class="btn btn-outline-pdcc btn-sm"
+                                onclick="editarVeiculo(${veiculo.id})"
+                            >
+                                <i class="bi bi-pencil-square me-1"></i>
+                                Editar
+                            </button>
 
-                    </div>
+                            <button
+                                type="button"
+                                class="btn btn-outline-danger btn-sm"
+                                onclick="excluirVeiculo(${veiculo.id})"
+                            >
+                                <i class="bi bi-trash me-1"></i>
+                                Excluir
+                            </button>
 
-                </td>
-            `;
+                        </div>
 
-            tabela.appendChild(linha);
-        });
+                    </td>
+                `;
+
+                tabela.appendChild(
+                    linha
+                );
+            }
+        );
     }
 
     async function carregarClientes() {
@@ -691,6 +818,16 @@
     }
 
     async function carregarVeiculos() {
+        const selectProntuario =
+            document.getElementById(
+                'prontuarioVeiculoSelect'
+            );
+
+        const botaoProntuario =
+            document.getElementById(
+                'botaoProntuario'
+            );
+
         try {
             const response =
                 await apiFetch(
@@ -703,7 +840,9 @@
 
             if (!response.ok) {
                 document
-                    .getElementById('tabelaVeiculos')
+                    .getElementById(
+                        'tabelaVeiculos'
+                    )
                     .innerHTML = `
                         <tr>
                             <td
@@ -715,6 +854,15 @@
                         </tr>
                     `;
 
+                selectProntuario.innerHTML =
+                    '<option value="">Não foi possível carregar os veículos</option>';
+
+                selectProntuario.disabled =
+                    true;
+
+                botaoProntuario.disabled =
+                    true;
+
                 return;
             }
 
@@ -722,10 +870,13 @@
                 await response.json();
 
             preencherTabela();
+            preencherSelectProntuario();
 
         } catch (error) {
             document
-                .getElementById('tabelaVeiculos')
+                .getElementById(
+                    'tabelaVeiculos'
+                )
                 .innerHTML = `
                     <tr>
                         <td
@@ -736,13 +887,23 @@
                         </td>
                     </tr>
                 `;
+
+            selectProntuario.innerHTML =
+                '<option value="">Erro ao carregar os veículos</option>';
+
+            selectProntuario.disabled =
+                true;
+
+            botaoProntuario.disabled =
+                true;
         }
     }
 
     function editarVeiculo(id) {
         const veiculo =
             veiculosCache.find(
-                item => item.id === id
+                item =>
+                    item.id === id
             );
 
         if (!veiculo) {
@@ -757,52 +918,76 @@
         limparMensagem();
 
         document
-            .getElementById('veiculoId')
-            .value = veiculo.id;
+            .getElementById(
+                'veiculoId'
+            )
+            .value =
+            veiculo.id;
 
         document
-            .getElementById('clienteSelect')
+            .getElementById(
+                'clienteSelect'
+            )
             .value =
             veiculo.cliente
                 ? veiculo.cliente.id
                 : '';
 
         document
-            .getElementById('modelo')
+            .getElementById(
+                'modelo'
+            )
             .value =
-            veiculo.modelo || '';
+            veiculo.modelo ||
+            '';
 
         document
-            .getElementById('placa')
+            .getElementById(
+                'placa'
+            )
             .value =
             formatarPlaca(
                 veiculo.placa
             );
 
         document
-            .getElementById('ano')
+            .getElementById(
+                'ano'
+            )
             .value =
-            veiculo.ano || '';
+            veiculo.ano ||
+            '';
 
         document
-            .getElementById('cor')
+            .getElementById(
+                'cor'
+            )
             .value =
-            veiculo.cor || '';
+            veiculo.cor ||
+            '';
 
         document
-            .getElementById('tituloFormulario')
+            .getElementById(
+                'tituloFormulario'
+            )
             .textContent =
             'Editar Veículo';
 
         document
-            .getElementById('botaoSalvar')
+            .getElementById(
+                'botaoSalvar'
+            )
             .innerHTML =
             '<i class="bi bi-check-lg me-1"></i>Atualizar Veículo';
 
         document
-            .getElementById('botaoCancelar')
+            .getElementById(
+                'botaoCancelar'
+            )
             .classList
-            .remove('d-none');
+            .remove(
+                'd-none'
+            );
 
         window.scrollTo({
             top: 0,
@@ -810,74 +995,103 @@
         });
 
         document
-            .getElementById('modelo')
+            .getElementById(
+                'modelo'
+            )
             .focus();
     }
 
     function cancelarEdicao() {
         document
-            .getElementById('veiculoForm')
+            .getElementById(
+                'veiculoForm'
+            )
             .reset();
 
         document
-            .getElementById('veiculoId')
-            .value = '';
+            .getElementById(
+                'veiculoId'
+            )
+            .value =
+            '';
 
         document
-            .getElementById('tituloFormulario')
+            .getElementById(
+                'tituloFormulario'
+            )
             .textContent =
             'Novo Veículo';
 
         document
-            .getElementById('botaoSalvar')
+            .getElementById(
+                'botaoSalvar'
+            )
             .innerHTML =
             '<i class="bi bi-check-lg me-1"></i>Salvar Veículo';
 
         document
-            .getElementById('botaoCancelar')
+            .getElementById(
+                'botaoCancelar'
+            )
             .classList
-            .add('d-none');
+            .add(
+                'd-none'
+            );
 
         limparMensagem();
     }
 
-    async function salvarVeiculo(event) {
+    async function salvarVeiculo(
+        event
+    ) {
         event.preventDefault();
 
         limparMensagem();
 
         const veiculoId =
             document
-                .getElementById('veiculoId')
+                .getElementById(
+                    'veiculoId'
+                )
                 .value;
 
         const clienteId =
             document
-                .getElementById('clienteSelect')
+                .getElementById(
+                    'clienteSelect'
+                )
                 .value;
 
         const modelo =
             document
-                .getElementById('modelo')
+                .getElementById(
+                    'modelo'
+                )
                 .value
                 .trim();
 
         const placa =
             formatarPlaca(
                 document
-                    .getElementById('placa')
+                    .getElementById(
+                        'placa'
+                    )
                     .value
             );
 
         const ano =
             document
-                .getElementById('ano')
+                .getElementById(
+                    'ano'
+                )
                 .value
                 .trim();
 
         const cor =
             document
-                .getElementById('cor')
+                .getElementById(
+                    'cor'
+                )
                 .value
                 .trim();
 
@@ -892,7 +1106,9 @@
 
         const veiculoData = {
             cliente: {
-                id: Number(clienteId)
+                id: Number(
+                    clienteId
+                )
             },
             modelo,
             placa,
@@ -901,7 +1117,9 @@
         };
 
         const editando =
-            Boolean(veiculoId);
+            Boolean(
+                veiculoId
+            );
 
         const caminho =
             editando
@@ -918,7 +1136,8 @@
                 'botaoSalvar'
             );
 
-        botaoSalvar.disabled = true;
+        botaoSalvar.disabled =
+            true;
 
         botaoSalvar.innerHTML =
             '<span class="spinner-border spinner-border-sm me-2"></span>Salvando...';
@@ -953,7 +1172,9 @@
                 return;
             }
 
-            if (response.status === 409) {
+            if (
+                response.status === 409
+            ) {
                 mostrarMensagem(
                     'Já existe um veículo cadastrado com esta placa.',
                     'warning'
@@ -962,7 +1183,9 @@
                 return;
             }
 
-            if (response.status === 404) {
+            if (
+                response.status === 404
+            ) {
                 mostrarMensagem(
                     'Veículo ou cliente não encontrado.',
                     'danger'
@@ -971,7 +1194,9 @@
                 return;
             }
 
-            if (response.status === 400) {
+            if (
+                response.status === 400
+            ) {
                 mostrarMensagem(
                     'Verifique os dados informados e tente novamente.',
                     'danger'
@@ -992,11 +1217,14 @@
             );
 
         } finally {
-            botaoSalvar.disabled = false;
+            botaoSalvar.disabled =
+                false;
 
             if (
                 document
-                    .getElementById('veiculoId')
+                    .getElementById(
+                        'veiculoId'
+                    )
                     .value
             ) {
                 botaoSalvar.innerHTML =
@@ -1008,10 +1236,139 @@
         }
     }
 
+    async function baixarProntuario() {
+        limparMensagem();
+
+        const select =
+            document.getElementById(
+                'prontuarioVeiculoSelect'
+            );
+
+        const veiculoId =
+            select.value;
+
+        if (!veiculoId) {
+            mostrarMensagem(
+                'Selecione um veículo.',
+                'warning'
+            );
+
+            return;
+        }
+
+        const veiculo =
+            veiculosCache.find(
+                item =>
+                    String(item.id) ===
+                    String(veiculoId)
+            );
+
+        const botao =
+            document.getElementById(
+                'botaoProntuario'
+            );
+
+        botao.disabled =
+            true;
+
+        botao.innerHTML =
+            '<span class="spinner-border spinner-border-sm me-2"></span>Gerando...';
+
+        try {
+            const response =
+                await apiFetch(
+                    `/api/veiculos/${veiculoId}/prontuario`
+                );
+
+            if (!response) {
+                return;
+            }
+
+            if (
+                response.status === 404
+            ) {
+                mostrarMensagem(
+                    'Veículo não encontrado.',
+                    'danger'
+                );
+
+                return;
+            }
+
+            if (!response.ok) {
+                mostrarMensagem(
+                    'Não foi possível gerar o prontuário.',
+                    'danger'
+                );
+
+                return;
+            }
+
+            const arquivo =
+                await response.blob();
+
+            const url =
+                URL.createObjectURL(
+                    arquivo
+                );
+
+            const link =
+                document.createElement(
+                    'a'
+                );
+
+            const placa =
+                veiculo
+                    ? formatarPlaca(
+                        veiculo.placa
+                    )
+                    : String(
+                        veiculoId
+                    );
+
+            link.href =
+                url;
+
+            link.download =
+                `prontuario-${placa}.pdf`;
+
+            document.body.appendChild(
+                link
+            );
+
+            link.click();
+
+            link.remove();
+
+            window.setTimeout(
+                () => {
+                    URL.revokeObjectURL(
+                        url
+                    );
+                },
+                1000
+            );
+
+        } catch (error) {
+            mostrarMensagem(
+                'Erro ao gerar o prontuário.',
+                'danger'
+            );
+
+        } finally {
+            botao.disabled =
+                false;
+
+            botao.innerHTML =
+                '<i class="bi bi-download me-1"></i>Gerar Prontuário';
+        }
+    }
+
     async function excluirVeiculo(id) {
         const veiculo =
             veiculosCache.find(
-                item => item.id === id
+                item =>
+                    item.id === id
             );
 
         const identificacao =
@@ -1053,7 +1410,9 @@
                 return;
             }
 
-            if (response.status === 409) {
+            if (
+                response.status === 409
+            ) {
                 mostrarMensagem(
                     'Este veículo possui serviços registrados e não pode ser excluído.',
                     'warning'
@@ -1062,7 +1421,9 @@
                 return;
             }
 
-            if (response.status === 404) {
+            if (
+                response.status === 404
+            ) {
                 mostrarMensagem(
                     'Veículo não encontrado.',
                     'danger'
@@ -1085,7 +1446,9 @@
     }
 
     document
-        .getElementById('placa')
+        .getElementById(
+            'placa'
+        )
         .addEventListener(
             'input',
             function () {
@@ -1097,7 +1460,9 @@
         );
 
     document
-        .getElementById('ano')
+        .getElementById(
+            'ano'
+        )
         .addEventListener(
             'input',
             function () {
@@ -1109,7 +1474,9 @@
         );
 
     document
-        .getElementById('veiculoForm')
+        .getElementById(
+            'veiculoForm'
+        )
         .addEventListener(
             'submit',
             salvarVeiculo
@@ -1120,7 +1487,9 @@
         async function () {
             protegerPagina();
 
-            if (!estaAutenticado()) {
+            if (
+                !estaAutenticado()
+            ) {
                 return;
             }
 
@@ -1136,8 +1505,8 @@
             }
 
             if (
-                getUsuarioRole()
-                === 'ADMIN'
+                getUsuarioRole() ===
+                'ADMIN'
             ) {
                 const menuUsuarios =
                     document.getElementById(
@@ -1153,6 +1522,7 @@
             try {
                 await carregarClientes();
                 await carregarVeiculos();
+
             } catch (error) {
                 mostrarMensagem(
                     'Erro ao carregar os dados da página.',
