@@ -1,0 +1,322 @@
+:root {
+    --pdcc-azul: #173A4D;
+    --pdcc-azul-escuro: #102B39;
+    --pdcc-azul-claro: #EBF2F5;
+    --pdcc-amarelo: #F2B705;
+    --pdcc-amarelo-escuro: #D9A404;
+    --pdcc-grafite: #33383C;
+    --pdcc-cinza: #6C757A;
+    --pdcc-cinza-claro: #F4F6F7;
+    --pdcc-borda: #D3DADE;
+    --pdcc-verde: #2E7D5B;
+    --pdcc-vermelho: #B7473A;
+    --pdcc-branco: #FFFFFF;
+    --pdcc-sombra: 0 8px 24px rgba(23, 58, 77, 0.10);
+    --pdcc-raio: 14px;
+}
+
+body {
+    background-color: var(--pdcc-cinza-claro);
+    color: var(--pdcc-grafite);
+}
+
+.text-pdcc {
+    color: var(--pdcc-azul) !important;
+}
+
+.text-pdcc-muted {
+    color: var(--pdcc-cinza) !important;
+}
+
+.bg-pdcc {
+    background-color: var(--pdcc-azul) !important;
+}
+
+.bg-pdcc-dark {
+    background-color: var(--pdcc-azul-escuro) !important;
+}
+
+.bg-pdcc-soft {
+    background-color: var(--pdcc-azul-claro) !important;
+}
+
+.bg-pdcc-yellow {
+    background-color: var(--pdcc-amarelo) !important;
+}
+
+.border-pdcc {
+    border-color: var(--pdcc-azul) !important;
+}
+
+.border-pdcc-yellow {
+    border-color: var(--pdcc-amarelo) !important;
+}
+
+.btn-pdcc {
+    background-color: var(--pdcc-azul);
+    border-color: var(--pdcc-azul);
+    border-bottom: 3px solid var(--pdcc-amarelo);
+    color: var(--pdcc-branco);
+}
+
+.btn-pdcc:hover,
+.btn-pdcc:focus {
+    background-color: var(--pdcc-azul-escuro);
+    border-color: var(--pdcc-azul-escuro);
+    border-bottom-color: var(--pdcc-amarelo);
+    color: var(--pdcc-branco);
+}
+
+.btn-pdcc-yellow {
+    background-color: var(--pdcc-amarelo);
+    border-color: var(--pdcc-amarelo);
+    color: var(--pdcc-azul-escuro);
+    font-weight: 600;
+}
+
+.btn-pdcc-yellow:hover,
+.btn-pdcc-yellow:focus {
+    background-color: var(--pdcc-amarelo-escuro);
+    border-color: var(--pdcc-amarelo-escuro);
+    color: var(--pdcc-azul-escuro);
+}
+
+.btn-outline-pdcc {
+    background-color: transparent;
+    border-color: var(--pdcc-azul);
+    color: var(--pdcc-azul);
+}
+
+.btn-outline-pdcc:hover,
+.btn-outline-pdcc:focus {
+    background-color: var(--pdcc-azul);
+    border-color: var(--pdcc-azul);
+    color: var(--pdcc-branco);
+}
+
+.btn-outline-danger {
+    color: var(--pdcc-vermelho);
+    border-color: var(--pdcc-vermelho);
+}
+
+.btn-outline-danger:hover,
+.btn-outline-danger:focus {
+    background-color: var(--pdcc-vermelho);
+    border-color: var(--pdcc-vermelho);
+    color: var(--pdcc-branco);
+}
+
+.pdcc-card {
+    background-color: var(--pdcc-branco);
+    border: 1px solid var(--pdcc-borda);
+    border-radius: var(--pdcc-raio);
+    box-shadow: var(--pdcc-sombra);
+}
+
+.pdcc-card-accent-blue {
+    border-left: 5px solid var(--pdcc-azul);
+}
+
+.pdcc-card-accent-yellow {
+    border-left: 5px solid var(--pdcc-amarelo);
+}
+
+.pdcc-card-accent-green {
+    border-left: 5px solid var(--pdcc-verde);
+}
+
+.pdcc-card-accent-red {
+    border-left: 5px solid var(--pdcc-vermelho);
+}
+
+.pdcc-page-title {
+    color: var(--pdcc-azul);
+    font-weight: 700;
+}
+
+.pdcc-page-subtitle {
+    color: var(--pdcc-cinza);
+}
+
+.pdcc-section-title {
+    color: var(--pdcc-azul);
+    font-weight: 700;
+}
+
+.pdcc-section-title::after {
+    content: "";
+    display: block;
+    width: 52px;
+    height: 3px;
+    margin-top: 7px;
+    border-radius: 20px;
+    background-color: var(--pdcc-amarelo);
+}
+
+.pdcc-sidebar {
+    background-color: var(--pdcc-azul-escuro);
+}
+
+.pdcc-sidebar-brand {
+    color: var(--pdcc-branco);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.pdcc-sidebar .nav-link {
+    color: rgba(255, 255, 255, 0.70);
+    border-radius: 10px;
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.pdcc-sidebar .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+    color: var(--pdcc-branco);
+}
+
+.pdcc-sidebar .nav-link.active {
+    background-color: var(--pdcc-azul);
+    color: var(--pdcc-branco);
+    border-left: 4px solid var(--pdcc-amarelo);
+}
+
+.pdcc-header {
+    border-bottom: 1px solid var(--pdcc-borda);
+}
+
+.pdcc-stat-label {
+    color: var(--pdcc-cinza);
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+}
+
+.pdcc-stat-value {
+    color: var(--pdcc-azul);
+    font-weight: 700;
+}
+
+.pdcc-table thead th {
+    background-color: var(--pdcc-azul);
+    color: var(--pdcc-branco);
+    border-color: var(--pdcc-azul);
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.pdcc-table tbody tr:hover {
+    background-color: var(--pdcc-azul-claro);
+}
+
+.pdcc-badge-plate {
+    display: inline-block;
+    min-width: 76px;
+    padding: 6px 12px;
+    border-top: 3px solid var(--pdcc-amarelo);
+    border-radius: 6px;
+    background-color: var(--pdcc-azul);
+    color: var(--pdcc-branco);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-align: center;
+}
+
+.pdcc-badge-success {
+    background-color: var(--pdcc-verde);
+    color: var(--pdcc-branco);
+}
+
+.pdcc-badge-danger {
+    background-color: var(--pdcc-vermelho);
+    color: var(--pdcc-branco);
+}
+
+.pdcc-form-control:focus,
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--pdcc-azul);
+    box-shadow: 0 0 0 0.2rem rgba(23, 58, 77, 0.15);
+}
+
+.pdcc-login-background {
+    min-height: 100vh;
+    background:
+        linear-gradient(
+            135deg,
+            var(--pdcc-azul-escuro) 0%,
+            var(--pdcc-azul) 65%,
+            #24566F 100%
+        );
+}
+
+.pdcc-login-card {
+    overflow: hidden;
+    border: 0;
+    border-radius: 18px;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.22);
+}
+
+.pdcc-login-header {
+    position: relative;
+    background-color: var(--pdcc-azul);
+    color: var(--pdcc-branco);
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.75rem !important;
+}
+
+.pdcc-login-header::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 5px;
+    background-color: var(--pdcc-amarelo);
+}
+
+.pdcc-logo-badge {
+    width: 116px;
+    height: 116px;
+    margin: 0 auto 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 24px;
+    background-color: rgba(255, 255, 255, 0.06);
+}
+
+.pdcc-login-logo {
+    width: 96px;
+    height: 96px;
+    display: block;
+    object-fit: contain;
+}
+
+.pdcc-footer-text {
+    color: var(--pdcc-cinza);
+    font-size: 0.78rem;
+}
+
+@media (max-width: 767.98px) {
+    .pdcc-sidebar {
+        min-height: auto !important;
+    }
+
+    .pdcc-page-title {
+        font-size: 1.55rem;
+    }
+
+    .pdcc-logo-badge {
+        width: 106px;
+        height: 106px;
+    }
+
+    .pdcc-login-logo {
+        width: 88px;
+        height: 88px;
+    }
+}
