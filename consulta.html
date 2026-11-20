@@ -1,132 +1,586 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PDCC - Consulta Pública de Prontuário</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <title>PDCC - Consulta Pública</title>
+
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+    >
+
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+            rel="stylesheet"
+    >
+
+    <link
+            href="css/pdcc.css"
+            rel="stylesheet"
+    >
 </head>
-<body class="bg-light">
 
-<div class="container py-5">
+<body>
+
+<div class="container py-4 py-md-5">
+
     <div class="text-center mb-4">
-        <div class="text-primary mb-2">
-            <i class="bi bi-tools fs-1"></i>
+
+        <img
+                src="images/logo-pdcc-icon.png"
+                alt="PDCC"
+                style="width: 88px; height: 88px; object-fit: contain;"
+                class="mb-2"
+        >
+
+        <h2 class="pdcc-page-title mb-1">
+            Autoelétrica Curto-Circuito
+        </h2>
+
+        <p class="pdcc-page-subtitle mb-0">
+            Histórico público do veículo
+        </p>
+
+    </div>
+
+    <div
+            id="mensagem"
+            class="alert d-none"
+            role="alert"
+    >
+    </div>
+
+    <div
+            id="cardVeiculo"
+            class="pdcc-card p-4 mb-4"
+    >
+
+        <div class="text-center text-pdcc-muted py-3">
+
+            <div
+                    class="spinner-border text-pdcc mb-2"
+                    role="status"
+            >
+                <span class="visually-hidden">
+                    Carregando
+                </span>
+            </div>
+
+            <div>
+                Carregando veículo...
+            </div>
+
         </div>
-        <h2 class="fw-bold">Autoelétrica Curto-Circuito</h2>
-        <p class="text-muted">Prontuário Técnico Digital do Veículo</p>
+
     </div>
 
-    <div class="card border-0 shadow-sm rounded-4 p-4 mb-4" id="cardVeiculo">
-        <div class="text-center text-muted">A carregar dados do veículo...</div>
-    </div>
+    <div class="pdcc-card p-4">
 
-    <div class="card border-0 shadow-sm rounded-4 p-4">
-        <h5 class="fw-bold mb-3"><i class="bi bi-clock-history me-2 text-primary"></i>Histórico de Manutenções Realizadas</h5>
+        <div
+                class="d-flex justify-content-between flex-wrap align-items-center gap-3 mb-4"
+        >
+
+            <h5 class="pdcc-section-title mb-0">
+                Histórico de Serviços
+            </h5>
+
+            <span
+                    id="totalServicos"
+                    class="badge rounded-pill bg-pdcc px-3 py-2"
+            >
+                0 serviços
+            </span>
+
+        </div>
+
         <div class="table-responsive">
-            <table class="table table-hover align-middle">
-                <thead class="table-dark">
+
+            <table
+                    class="table table-hover align-middle pdcc-table mb-0"
+            >
+
+                <thead>
+
                 <tr>
                     <th>Data</th>
-                    <th>Diagnóstico Técnico</th>
+                    <th>Diagnóstico</th>
                     <th>Serviço Executado</th>
-                    <th>Peças Substituídas</th>
-                    <th>Garantia Até</th>
+                    <th>Peças</th>
+                    <th>Garantia</th>
                 </tr>
+
                 </thead>
+
                 <tbody id="tabelaHistorico">
+
                 <tr>
-                    <td colspan="5" class="text-center text-muted">Carregando dados...</td>
+                    <td
+                            colspan="5"
+                            class="text-center text-muted py-4"
+                    >
+                        Carregando histórico...
+                    </td>
                 </tr>
+
                 </tbody>
+
             </table>
+
         </div>
+
     </div>
 
     <div class="text-center mt-4">
-        <small class="text-muted">
-            <i class="bi bi-shield-lock me-1"></i> Consulta pública limitada para proteção de dados cadastrais conforme a LGPD.
+
+        <small class="text-pdcc-muted">
+            <i class="bi bi-shield-lock me-1"></i>
+            Consulta pública com dados limitados do veículo.
         </small>
+
     </div>
+
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js">
+</script>
+
+<script src="js/config.js"></script>
 
 <script>
-    const API_URL = 'https://pdcc-api.onrender.com';
+    const parametros =
+        new URLSearchParams(
+            window.location.search
+        );
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const veiculoId = urlParams.get('id');
+    const token =
+        parametros.get('token');
+
+    function escaparHtml(valor) {
+        if (
+            valor === null ||
+            valor === undefined
+        ) {
+            return '';
+        }
+
+        return String(valor)
+            .replaceAll('&', '&amp;')
+            .replaceAll('<', '&lt;')
+            .replaceAll('>', '&gt;')
+            .replaceAll('"', '&quot;')
+            .replaceAll("'", '&#039;');
+    }
+
+    function formatarData(data) {
+        if (!data) {
+            return '-';
+        }
+
+        const partes =
+            String(data)
+                .split('-');
+
+        if (partes.length !== 3) {
+            return data;
+        }
+
+        return `${partes[2]}/${partes[1]}/${partes[0]}`;
+    }
+
+    function mostrarMensagem(
+        texto,
+        tipo = 'danger'
+    ) {
+        const mensagem =
+            document.getElementById(
+                'mensagem'
+            );
+
+        mensagem.className =
+            `alert alert-${tipo}`;
+
+        mensagem.textContent =
+            texto;
+
+        mensagem.classList.remove(
+            'd-none'
+        );
+    }
+
+    function formatarStatusGarantia(
+        status,
+        dataGarantia
+    ) {
+        if (
+            status === 'EM_GARANTIA'
+        ) {
+            return `
+                <span class="badge pdcc-badge-success">
+                    Em garantia
+                </span>
+                ${
+                    dataGarantia
+                        ? `
+                            <div class="small text-pdcc-muted mt-1">
+                                até ${formatarData(dataGarantia)}
+                            </div>
+                          `
+                        : ''
+                }
+            `;
+        }
+
+        if (
+            status === 'EXPIRADA'
+        ) {
+            return `
+                <span class="badge pdcc-badge-danger">
+                    Expirada
+                </span>
+                ${
+                    dataGarantia
+                        ? `
+                            <div class="small text-pdcc-muted mt-1">
+                                até ${formatarData(dataGarantia)}
+                            </div>
+                          `
+                        : ''
+                }
+            `;
+        }
+
+        return `
+            <span class="badge bg-secondary">
+                Sem garantia
+            </span>
+        `;
+    }
+
+    function renderizarPecas(texto) {
+        if (
+            !texto ||
+            !String(texto).trim()
+        ) {
+            return '-';
+        }
+
+        const pecas =
+            String(texto)
+                .split(/\r?\n/)
+                .map(peca =>
+                    peca.trim()
+                )
+                .filter(peca =>
+                    peca.length > 0
+                );
+
+        if (
+            pecas.length === 0
+        ) {
+            return '-';
+        }
+
+        const itens =
+            pecas
+                .map(peca =>
+                    `<li>${escaparHtml(peca)}</li>`
+                )
+                .join('');
+
+        return `
+            <ul class="mb-0 ps-3">
+                ${itens}
+            </ul>
+        `;
+    }
+
+    function preencherVeiculo(
+        veiculo
+    ) {
+        const card =
+            document.getElementById(
+                'cardVeiculo'
+            );
+
+        card.innerHTML = `
+            <div
+                class="d-flex justify-content-between flex-wrap align-items-center gap-3"
+            >
+
+                <div>
+
+                    <div class="text-pdcc-muted small mb-1">
+                        VEÍCULO
+                    </div>
+
+                    <h3 class="text-pdcc fw-bold mb-2">
+                        ${escaparHtml(veiculo.modelo || '-')}
+                    </h3>
+
+                    <span class="pdcc-badge-plate">
+                        ${escaparHtml(veiculo.placa || '-')}
+                    </span>
+
+                </div>
+
+                <div class="text-md-end">
+
+                    <div class="mb-2">
+
+                        <span class="text-pdcc-muted small">
+                            Ano
+                        </span>
+
+                        <div class="fw-semibold">
+                            ${escaparHtml(veiculo.ano || 'N/D')}
+                        </div>
+
+                    </div>
+
+                    <div>
+
+                        <span class="text-pdcc-muted small">
+                            Cor
+                        </span>
+
+                        <div class="fw-semibold">
+                            ${escaparHtml(veiculo.cor || 'N/D')}
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        `;
+    }
+
+    function preencherHistorico(
+        historico
+    ) {
+        const tabela =
+            document.getElementById(
+                'tabelaHistorico'
+            );
+
+        const total =
+            historico.length;
+
+        document
+            .getElementById(
+                'totalServicos'
+            )
+            .textContent =
+            `${total} ${total === 1 ? 'serviço' : 'serviços'}`;
+
+        tabela.innerHTML = '';
+
+        if (
+            historico.length === 0
+        ) {
+            tabela.innerHTML = `
+                <tr>
+                    <td
+                        colspan="5"
+                        class="text-center text-muted py-4"
+                    >
+                        Nenhum serviço registrado para este veículo.
+                    </td>
+                </tr>
+            `;
+
+            return;
+        }
+
+        const ordenado =
+            [...historico]
+                .sort((a, b) =>
+                    String(b.dataServico || '')
+                        .localeCompare(
+                            String(a.dataServico || '')
+                        )
+                );
+
+        ordenado.forEach(
+            servico => {
+                const linha =
+                    document.createElement(
+                        'tr'
+                    );
+
+                linha.innerHTML = `
+                    <td class="text-nowrap">
+                        ${formatarData(servico.dataServico)}
+                    </td>
+
+                    <td>
+                        ${escaparHtml(servico.diagnostico || '-')}
+                    </td>
+
+                    <td>
+                        ${escaparHtml(servico.servicoExecutado || '-')}
+                    </td>
+
+                    <td>
+                        ${renderizarPecas(servico.pecasTrocadas)}
+                    </td>
+
+                    <td>
+                        ${formatarStatusGarantia(
+                            servico.statusGarantia,
+                            servico.garantiaFim
+                        )}
+                    </td>
+                `;
+
+                tabela.appendChild(
+                    linha
+                );
+            }
+        );
+    }
+
+    function exibirLinkInvalido() {
+        document
+            .getElementById(
+                'cardVeiculo'
+            )
+            .innerHTML = `
+                <div class="text-center py-4">
+
+                    <i
+                        class="bi bi-exclamation-circle fs-1 text-danger d-block mb-3"
+                    ></i>
+
+                    <h5 class="text-pdcc fw-bold">
+                        Link inválido
+                    </h5>
+
+                    <p class="text-pdcc-muted mb-0">
+                        Não foi possível identificar o veículo.
+                    </p>
+
+                </div>
+            `;
+
+        document
+            .getElementById(
+                'tabelaHistorico'
+            )
+            .innerHTML = `
+                <tr>
+                    <td
+                        colspan="5"
+                        class="text-center text-muted py-4"
+                    >
+                        Histórico indisponível.
+                    </td>
+                </tr>
+            `;
+    }
 
     async function carregarConsultaPublica() {
-        if (!veiculoId) {
-            document.getElementById('cardVeiculo').innerHTML = `
-                <div class="alert alert-danger text-center mb-0">Veículo não especificado ou link inválido.</div>
-            `;
+        if (!token) {
+            exibirLinkInvalido();
+
+            mostrarMensagem(
+                'O link de consulta é inválido.'
+            );
+
             return;
         }
 
         try {
-            const [resVeiculo, resServicos] = await Promise.all([
-                fetch(`${API_URL}/api/veiculos/${veiculoId}`),
-                fetch(`${API_URL}/api/servicos`)
-            ]);
+            const response =
+                await fetch(
+                    `${API_URL}/api/publico/veiculos/${encodeURIComponent(token)}`
+                );
 
-            if (resVeiculo.ok) {
-                const v = await resVeiculo.json();
+            if (
+                response.status === 404
+            ) {
+                exibirLinkInvalido();
 
-                document.getElementById('cardVeiculo').innerHTML = `
-                    <div class="row align-items-center">
-                        <div class="col-md-8">
-                            <h3 class="fw-bold text-primary mb-1">${v.modelo}</h3>
-                            <p class="text-muted mb-2">Placa: <span class="badge bg-secondary">${v.placa}</span></p>
-                            <p class="mb-1"><strong>Ano:</strong> ${v.ano || 'N/D'} | <strong>Cor:</strong> ${v.cor || 'N/D'}</p>
-                        </div>
-                        <div class="col-md-4 text-md-end mt-3 mt-md-0">
-                            <span class="badge bg-success p-2">Veículo Registado na Oficina</span>
-                        </div>
+                mostrarMensagem(
+                    'Veículo não encontrado ou link inválido.',
+                    'warning'
+                );
+
+                return;
+            }
+
+            if (!response.ok) {
+                mostrarMensagem(
+                    'Não foi possível carregar a consulta.'
+                );
+
+                return;
+            }
+
+            const dados =
+                await response.json();
+
+            preencherVeiculo(
+                dados
+            );
+
+            const historico =
+                Array.isArray(
+                    dados.historico
+                )
+                    ? dados.historico
+                    : [];
+
+            preencherHistorico(
+                historico
+            );
+
+        } catch (error) {
+            document
+                .getElementById(
+                    'cardVeiculo'
+                )
+                .innerHTML = `
+                    <div class="text-center text-danger py-4">
+
+                        <i
+                            class="bi bi-exclamation-circle fs-1 d-block mb-3"
+                        ></i>
+
+                        Erro ao conectar com o servidor.
+
                     </div>
                 `;
 
-                if (resServicos.ok) {
-                    const todosServicos = await resServicos.json();
-                    const servicosVeiculo = todosServicos.filter(s => s.veiculo && s.veiculo.id == veiculoId);
-
-                    const tabela = document.getElementById('tabelaHistorico');
-                    tabela.innerHTML = '';
-
-                    if (servicosVeiculo.length === 0) {
-                        tabela.innerHTML = `<tr><td colspan="5" class="text-center text-muted">Nenhum serviço registado para este veículo.</td></tr>`;
-                        return;
-                    }
-
-                    servicosVeiculo.forEach(s => {
-                        const tr = document.createElement('tr');
-                        tr.innerHTML = `
-                            <td>${s.dataServico || '-'}</td>
-                            <td>${s.diagnostico || '-'}</td>
-                            <td>${s.servicoExecutado || '-'}</td>
-                            <td>${s.pecasTrocadas || '-'}</td>
-                            <td>${s.garantiaFim || 'Sem garantia'}</td>
-                        `;
-                        tabela.appendChild(tr);
-                    });
-                }
-            } else {
-                document.getElementById('cardVeiculo').innerHTML = `
-                    <div class="alert alert-warning text-center mb-0">Veículo não encontrado no sistema.</div>
+            document
+                .getElementById(
+                    'tabelaHistorico'
+                )
+                .innerHTML = `
+                    <tr>
+                        <td
+                            colspan="5"
+                            class="text-center text-danger py-4"
+                        >
+                            Histórico indisponível.
+                        </td>
+                    </tr>
                 `;
-            }
-        } catch (err) {
-            console.error("Erro ao carregar consulta:", err);
-            document.getElementById('cardVeiculo').innerHTML = `
-                <div class="alert alert-danger text-center mb-0">Erro ao comunicar com o servidor.</div>
-            `;
+
+            mostrarMensagem(
+                'Erro ao conectar com o servidor.'
+            );
         }
     }
 
-    carregarConsultaPublica();
+    document.addEventListener(
+        'DOMContentLoaded',
+        carregarConsultaPublica
+    );
 </script>
 </body>
 </html>
